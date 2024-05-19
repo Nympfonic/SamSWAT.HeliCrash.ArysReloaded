@@ -7,7 +7,7 @@ using System.Reflection;
 
 namespace SamSWAT.HeliCrash.ArysReloaded
 {
-    [BepInPlugin("com.SamSWAT.HeliCrash.ArysReloaded", "SamSWAT.HeliCrash.ArysReloaded", "2.2.1")]
+    [BepInPlugin("com.SamSWAT.HeliCrash.ArysReloaded", "SamSWAT.HeliCrash.ArysReloaded", "2.2.2")]
     public class Plugin : BaseUnityPlugin
     {
         internal static HeliCrashLocations HeliCrashLocations;
@@ -20,7 +20,8 @@ namespace SamSWAT.HeliCrash.ArysReloaded
             LogSource = Logger;
             Directory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             new HeliCrashPatch().Enable();
-            var json = File.ReadAllText($"{Directory}/HeliCrashLocations.json");
+            var jsonPath = Path.Combine(Directory, "HeliCrashLocations.json");
+            var json = File.ReadAllText(jsonPath);
             HeliCrashLocations = JsonConvert.DeserializeObject<HeliCrashLocations>(json);
 
             HeliCrashChance = Config.Bind(

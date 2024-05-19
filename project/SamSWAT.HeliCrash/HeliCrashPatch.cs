@@ -18,7 +18,7 @@ namespace SamSWAT.HeliCrash.ArysReloaded
         public static void PatchPostfix(GameWorld __instance)
         {
             var gameWorld = __instance;
-            var crashAvailable = __instance.MainPlayer.Location.ToLower() == "sandbox" || LocationScene.GetAll<AirdropPoint>().Any();
+            var crashAvailable = gameWorld.MainPlayer.Location.ToLower() == "sandbox" || LocationScene.GetAll<AirdropPoint>().Any();
             var location = gameWorld.MainPlayer.Location;
             
             if (!crashAvailable || !BlessRNG.RngBool(Plugin.HeliCrashChance.Value)) return;

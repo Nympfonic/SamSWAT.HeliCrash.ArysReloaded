@@ -76,17 +76,5 @@
     <Compile Include="Utils\BlessRNG.cs" />
     <Compile Include="Utils\HeliCrashLocations.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Content Include="References\0Harmony.dll" />
-    <Content Include="References\aki-custom.dll" />
-    <Content Include="References\Aki.Reflection.dll" />
-    <Content Include="References\Assembly-CSharp.dll" />
-    <Content Include="References\BepInEx.dll" />
-    <Content Include="References\Comfort.dll" />
-    <Content Include="References\Mono.Cecil.dll" />
-    <Content Include="References\UnityEngine.AssetBundleModule.dll" />
-    <Content Include="References\UnityEngine.CoreModule.dll" />
-    <Content Include="References\UnityEngine.dll" />
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
