@@ -1,19 +1,50 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">  
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{108B64A1-AEFD-4660-9B8B-363B62CB9621}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>SamSWAT.HeliCrash.ArysReloaded</RootNamespace>
     <AssemblyName>SamSWAT.HeliCrash.ArysReloaded</AssemblyName>
-    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
+    <TargetFramework>netstandard2.1</TargetFramework>
     <Deterministic>true</Deterministic>
-    <TargetFrameworkProfile />
+    <LangVersion>latest</LangVersion>
+    <IsPackable>false</IsPackable>
+    <Version>2.3.0</Version>
+    <Copyright>Copyright © SamSWAT, Arys 2025</Copyright>
+    <AssemblyVersion>2.3.0</AssemblyVersion>
+    <FileVersion>2.3.0</FileVersion>
   </PropertyGroup>
+
+  <!-- ONLY MODIFY THIS SECTION -->
+  <PropertyGroup>
+    <!-- Your SPT path -->
+    <SptDir>E:\SPT-3.11\</SptDir>
+    
+    <!--
+      This is the path to where all your different SPT versions' assemblies are stored
+      For example, my SPT Assemblies folder is laid out like so:
+        SPT Assemblies
+        ↳ 38x
+          ↳ ..
+          ↳ Assembly-CSharp.dll
+        ↳ 39x
+        ↳ 310x
+        ↳ 311x
+    -->
+    <SptSharedAssembliesDir>..\..\..\..\SPT Assemblies\</SptSharedAssembliesDir>
+
+    <!--
+      The SPT version to target.
+      This is used to find the corresponding SPT version's assembles in <SptSharedAssembliesDir>
+      The value here is mostly a fallback value if you do not have a build configuration set up yet
+    -->
+    <SptVersion Condition=" '$(SptVersion)' == '' ">311x</SptVersion>
+  </PropertyGroup>
+  <!-- DO NOT MODIFY BEYOND THIS LINE UNLESS YOU KNOW WHAT YOU ARE DOING -->
+  
+  <PropertyGroup>
+    <CopyToOutputDir>$(MSBuildThisFileDirectory)CopyToOutput</CopyToOutputDir>
+    <SptBepInExPluginsDir>$(SptDir)BepInEx\plugins\</SptBepInExPluginsDir>
+    <SptBepInExPatchersDir>$(SptDir)BepInEx\patchers\</SptBepInExPatchersDir>
+  </PropertyGroup>
+  
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
@@ -31,66 +62,66 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'SPT-3.10 Release|AnyCPU' ">
+    <Optimize>true</Optimize>
+    <OutputPath>build\SPT-3.10\</OutputPath>
+    <SptVersion>310x</SptVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'SPT-3.11 Release|AnyCPU' ">
+    <Optimize>true</Optimize>
+    <OutputPath>build\SPT-3.11\</OutputPath>
+    <SptVersion>311x</SptVersion>
+  </PropertyGroup>
+  
   <ItemGroup>
-    <Reference Include="0Harmony, Version=2.9.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Arys Mods\SPT Assembly Refs\38x\0Harmony.dll</HintPath>
+    <Reference Include="0Harmony">
+      <HintPath>$(SptSharedAssembliesDir)$(SptVersion)\0Harmony.dll</HintPath>
     </Reference>
-    <Reference Include="aki-custom, Version=3.8.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Arys Mods\SPT Assembly Refs\38x\aki-custom.dll</HintPath>
+    <Reference Include="Sirenix.Serialization">
+      <HintPath>$(SptSharedAssembliesDir)$(SptVersion)\Sirenix.Serialization.dll</HintPath>
     </Reference>
-    <Reference Include="Aki.Reflection, Version=3.8.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Arys Mods\SPT Assembly Refs\38x\Aki.Reflection.dll</HintPath>
+    <Reference Include="spt-common">
+      <HintPath>$(SptSharedAssembliesDir)$(SptVersion)\spt-common.dll</HintPath>
     </Reference>
-    <Reference Include="Assembly-CSharp, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Arys Mods\SPT Assembly Refs\38x\Assembly-CSharp.dll</HintPath>
+    <Reference Include="spt-custom">
+      <HintPath>$(SptSharedAssembliesDir)$(SptVersion)\spt-custom.dll</HintPath>
     </Reference>
-    <Reference Include="BepInEx, Version=5.4.22.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Arys Mods\SPT Assembly Refs\38x\BepInEx.dll</HintPath>
+    <Reference Include="spt-reflection">
+      <HintPath>$(SptSharedAssembliesDir)$(SptVersion)\spt-reflection.dll</HintPath>
     </Reference>
-    <Reference Include="Comfort, Version=1.0.0.4, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Arys Mods\SPT Assembly Refs\38x\Comfort.dll</HintPath>
+    <Reference Include="Assembly-CSharp">
+      <HintPath>$(SptSharedAssembliesDir)$(SptVersion)\Assembly-CSharp.dll</HintPath>
     </Reference>
-    <Reference Include="Mono.Cecil, Version=0.10.4.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Arys Mods\SPT Assembly Refs\38x\Mono.Cecil.dll</HintPath>
+    <Reference Include="BepInEx">
+      <HintPath>$(SptSharedAssembliesDir)$(SptVersion)\BepInEx.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Arys Mods\SPT Assembly Refs\38x\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Comfort">
+      <HintPath>$(SptSharedAssembliesDir)$(SptVersion)\Comfort.dll</HintPath>
     </Reference>
-    <Reference Include="System" />
-    <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Arys Mods\SPT Assembly Refs\38x\UnityEngine.dll</HintPath>
+    <Reference Include="Mono.Cecil">
+      <HintPath>$(SptSharedAssembliesDir)$(SptVersion)\Mono.Cecil.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>$(SptSharedAssembliesDir)$(SptVersion)\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine">
+      <HintPath>$(SptSharedAssembliesDir)$(SptVersion)\UnityEngine.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AIModule">
-      <HintPath>..\..\..\Arys Mods\SPT Assembly Refs\38x\UnityEngine.AIModule.dll</HintPath>
+      <HintPath>$(SptSharedAssembliesDir)$(SptVersion)\UnityEngine.AIModule.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.AssetBundleModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Arys Mods\SPT Assembly Refs\38x\UnityEngine.AssetBundleModule.dll</HintPath>
+    <Reference Include="UnityEngine.AssetBundleModule">
+      <HintPath>$(SptSharedAssembliesDir)$(SptVersion)\UnityEngine.AssetBundleModule.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Arys Mods\SPT Assembly Refs\38x\UnityEngine.CoreModule.dll</HintPath>
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>$(SptSharedAssembliesDir)$(SptVersion)\UnityEngine.CoreModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.PhysicsModule">
-      <HintPath>..\..\..\Arys Mods\SPT Assembly Refs\38x\UnityEngine.PhysicsModule.dll</HintPath>
+      <HintPath>$(SptSharedAssembliesDir)$(SptVersion)\UnityEngine.PhysicsModule.dll</HintPath>
     </Reference>
   </ItemGroup>
-  <ItemGroup>
-    <Compile Include="HeliCrash.cs" />
-    <Compile Include="HeliCrashPatch.cs" />
-    <Compile Include="Plugin.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Utils\BlessRNG.cs" />
-    <Compile Include="Utils\HeliCrashLocations.cs" />
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="copy &quot;$(TargetPath)&quot; &quot;$(SptBepInExPluginsDir)SamSWAT.HeliCrash.ArysReloaded\$(TargetFileName)&quot;&#xA;xcopy /y &quot;$(CopyToOutputDir)&quot; &quot;$(SptBepInExPluginsDir)SamSWAT.HeliCrash.ArysReloaded\&quot;" />
+  </Target>
 </Project>
