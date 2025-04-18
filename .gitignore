@@ -388,4 +388,5 @@ FodyWeavers.xsd
 .idea/
 *.sln.iml
 
-/**/**/References/
+*.bundle
+project/SamSWAT.HeliCrash/build/**
