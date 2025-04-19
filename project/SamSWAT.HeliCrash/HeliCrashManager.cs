@@ -96,8 +96,10 @@ public class HeliCrashManager : MonoBehaviourSingleton<HeliCrashManager>
 	
 	private static void CarveNavMesh(GameObject choppa)
 	{
-		var navMeshObstacle = choppa.AddComponent<NavMeshObstacle>();
-		var collider = choppa.GetComponentInChildren<Collider>();
+		var navMeshObstacle = choppa.transform.GetChild(0)
+			.FindTransformWhere(t => t.name.Contains("COLLIDER"))!
+			.gameObject.AddComponent<NavMeshObstacle>();
+		var collider = navMeshObstacle.GetComponent<Collider>();
 		
 		navMeshObstacle.center = collider.bounds.center;
 		navMeshObstacle.size = collider.bounds.size;
