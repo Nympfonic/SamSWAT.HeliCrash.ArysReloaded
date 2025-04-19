@@ -26,17 +26,8 @@ internal class LootController
 		_poolManager = Singleton<PoolManagerClass>.Instance
 			?? throw new NullReferenceException("LootController._poolManager is null");
 		
-		// ClientApplication<T> is derived from MonoBehaviour so we use an explicit null check instead of null-coalescing operators
-		var profileEndpointFactory = (ProfileEndpointFactoryAbstractClass)
+		_profileEndpointFactory = (ProfileEndpointFactoryAbstractClass)
 			Singleton<ClientApplication<ISession>>.Instance.GetClientBackEndSession();
-		if (profileEndpointFactory == null)
-		{
-			throw new NullReferenceException("LootController._profileEndpointFactory is null");
-		}
-		else
-		{
-			_profileEndpointFactory = profileEndpointFactory;
-		}
 	}
 	
 	public async Task<Item> CreateContainer(string lootTemplateId = null)
