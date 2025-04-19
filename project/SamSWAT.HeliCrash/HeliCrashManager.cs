@@ -72,7 +72,7 @@ public class HeliCrashManager : MonoBehaviourSingleton<HeliCrashManager>
 			location.Position, 
 			Quaternion.Euler(location.Rotation));
 		
-		CarveNavMesh(choppa);
+		// CarveNavMesh(choppa);
 		
 		var container = choppa.GetComponentInChildren<EFT.Interactive.LootableContainer>();
 		if (withLoot)
@@ -94,20 +94,20 @@ public class HeliCrashManager : MonoBehaviourSingleton<HeliCrashManager>
 		return choppa;
 	}
 	
-	private static void CarveNavMesh(GameObject choppa)
-	{
-		var navMeshObstacle = choppa.transform.GetChild(0)
-			.FindTransformWhere(t => t.name.Contains("COLLIDER"))!
-			.gameObject.AddComponent<NavMeshObstacle>();
-		var collider = navMeshObstacle.GetComponent<Collider>();
-		
-		navMeshObstacle.center = collider.bounds.center;
-		navMeshObstacle.size = collider.bounds.size;
-		
-		// Toggle to force an update on carving the nav mesh
-		navMeshObstacle.carving = false;
-		navMeshObstacle.carving = true;
-	}
+	// NavMeshObstacle doesn't work on Colliders other than Box or Capsule Colliders
+	// TODO: Change main collider from MeshCollider to BoxCollider
+	// private static void CarveNavMesh(GameObject choppa)
+	// {
+	// 	var navMeshObstacle = choppa.transform.GetChild(0).GetChild(5) .gameObject.AddComponent<NavMeshObstacle>();
+	// 	var collider = navMeshObstacle.GetComponent<Collider>();
+	// 	
+	// 	navMeshObstacle.center = collider.bounds.center;
+	// 	navMeshObstacle.size = collider.bounds.size;
+	// 	
+	// 	// Toggle to force an update on carving the nav mesh
+	// 	navMeshObstacle.carving = false;
+	// 	navMeshObstacle.carving = true;
+	// }
 	
 	private static async Task CreateLoot(EFT.Interactive.LootableContainer container)
 	{
